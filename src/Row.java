@@ -42,6 +42,11 @@ public class Row
     {
         this.turnaroundTime = turnaroundTime;
     }
+
+    public void setPriorityLevel(int priorityLevel)
+    {
+        this.priorityLevel = priorityLevel;
+    }
     
     public String getProcessName()
     {

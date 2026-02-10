@@ -82,7 +82,7 @@ public class GUI
         tatResultLabel = new JLabel();
         tatResultLabel.setBounds(215, 450, 180, 25);
         
-        option = new JComboBox(new String[]{"FCFS", "SJF", "SRT", "PSN", "PSP", "RR"});
+        option = new JComboBox(new String[]{"FCFS", "SJF", "SRT", "PSN", "PSP", "RR", "PSN-Aging", "PSN-Aging-Boost"});
         option.setBounds(390, 420, 85, 20);
         
         computeBtn = new JButton("Compute");
@@ -118,6 +118,22 @@ public class GUI
                         scheduler = new RoundRobin();
                         scheduler.setTimeQuantum(Integer.parseInt(tq)); 
                         break;
+                    case "PSN-Aging":
+                        String agingThreshold = JOptionPane.showInputDialog("Aging Threshold");
+                        if (agingThreshold == null) {
+                            return;
+                        }
+                        scheduler = new PriorityNonPreemptiveAging();
+                        ((PriorityNonPreemptiveAging) scheduler).setAgingThreshold(Integer.parseInt(agingThreshold));
+                        break;
+                    case "PSN-Aging-Boost":
+                        String agingThresholdBoost = JOptionPane.showInputDialog("Aging Threshold");
+                        if (agingThresholdBoost == null) {
+                            return;
+                        }
+                        scheduler = new PriorityNonPreemptiveAgingBoost();
+                        ((PriorityNonPreemptiveAgingBoost) scheduler).setAgingThreshold(Integer.parseInt(agingThresholdBoost));
+                        break;
                     default:
                         return;
                 }
@@ -129,7 +145,7 @@ public class GUI
                     int bt = Integer.parseInt((String) model.getValueAt(i, 2));
                     int pl;
                     
-                    if (selected.equals("PSN") || selected.equals("PSP"))
+                    if (selected.equals("PSN") || selected.equals("PSP") || selected.equals("PSN-Aging") || selected.equals("PSN-Aging-Boost"))
                     {
                         if (!model.getValueAt(i, 3).equals(""))
                         {
